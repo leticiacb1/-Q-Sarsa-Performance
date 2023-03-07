@@ -9,7 +9,7 @@ class QLearning(Algoritimo):
     def __init__(self, env, alpha, gamma, epsilon, epsilon_min, epsilon_dec, episodes):
           super().__init__(env, alpha, gamma, epsilon, epsilon_min, epsilon_dec, episodes)
 
-    def train(self, csv_name, grafic_name):
+    def train(self, csv_name, grafic_name, both = False):
         actions_per_episode = []
         reward_per_episode = []
         reward_list = []
@@ -58,9 +58,9 @@ class QLearning(Algoritimo):
             if self.epsilon > self.epsilon_min:
                 self.epsilon = self.epsilon * self.epsilon_dec
 
-
-        savetxt(csv_name, self.q_table, delimiter=',')
-        self.plotactions(grafic_name, actions_per_episode, range(0,self.episodes) , 'Actions vs Episodes', 'Episodes', 'Actions')
+        if(not both):
+            savetxt(csv_name, self.q_table, delimiter=',')
+            self.plotactions(grafic_name, actions_per_episode, range(0,self.episodes) , 'Actions vs Episodes', 'Episodes', 'Actions')
 
         return self.q_table , reward_per_episode
    

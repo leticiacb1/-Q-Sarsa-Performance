@@ -22,7 +22,7 @@ from Sarsa import *
 # ------------------------------------------------
 
 
-def run_algorithm(env, q_table , both=False):
+def run_algorithm(env, q_table):
     
     (state, _) = env.reset()
     rewards , epochs , actions = 0 , 0 , 0
@@ -45,13 +45,21 @@ def run_algorithm(env, q_table , both=False):
             }
         )
         epochs += 1
+        
+    if (epochs == 100):
+        raise Exception("[ERROR] I didn't find the optimal solution !") 
 
+    
     clear_output(wait=True)
     print_frames(frames)
 
+    print('\n-------------------------------------')
+    print('           SHOW METRICS              ')
+    print('-------------------------------------\n')
+
     print("\n")
-    print("Actions taken: {}".format(actions))
-    print("Rewards: {}".format(rewards))
+    print("   > Actions taken: {}".format(actions))
+    print("\n   > Rewards: {}".format(rewards))
 
 
 def main(previous_info , algo):
@@ -80,7 +88,7 @@ def main(previous_info , algo):
             # Roda algoritimo para verificar aprendizagem:
             run_algorithm(env, q_table)
         else:
-             raise Exception("Wrong inputs to the program.") 
+             raise Exception("[ERROR] Wrong inputs to the program.") 
 
     else:
         # Executa algorítimo de aprendizagem escolhido.  
@@ -90,6 +98,9 @@ def main(previous_info , algo):
             q_table , rewards_list =  qlearning.train(csv_name, grafic_actions_name)
             
             # Roda algoritimo para verificar aprendizagem:
+            print('\n-------------------------------------')
+            print('------- RUNNING Q-LEARNING ----------')
+            print('-------------------------------------\n')
             run_algorithm(env, q_table)
   
         elif(algo == 'sarsa'):
@@ -98,20 +109,41 @@ def main(previous_info , algo):
             q_table , rewards_list = sarsa.train(csv_name, grafic_actions_name)
             
             # Roda algoritimo para verificar aprendizagem:
+            print('\n-------------------------------------')
+            print('---------- RUNNING SARSA ------------')
+            print('-------------------------------------\n')
             run_algorithm(env, q_table)
 
         else:
 
             if(algo == 'both'):
                 
-                sarsa =  Sarsa(env, alpha=alpha, gamma=gamma, epsilon=epsilon, epsilon_min=epsilon_min, epsilon_dec=epsilon_dec, episodes=episodes) 
+                # Algorítimos:
                 q =   QLearning(env, alpha=alpha, gamma=gamma, epsilon=epsilon, epsilon_min=epsilon_min, epsilon_dec=epsilon_dec, episodes=episodes)
+                sarsa =  Sarsa(env, alpha=alpha, gamma=gamma, epsilon=epsilon, epsilon_min=epsilon_min, epsilon_dec=epsilon_dec, episodes=episodes) 
                 
-                algorithms_list.append(q) 
-                algorithms_list.append(sarsa)
+                # Treino:
+                q_table_q , q_rewards_list =  q.train('', '', both = True)
+                q_table_sarsa , sarsa_rewards_list =  sarsa.train('', '' , both = True)
+
+                # Roda algoritimo para verificar aprendizagem:
+                print('\n-------------------------------------')
+                print('------- RUNNING Q-LEARNING ----------')
+                print('-------------------------------------\n')
+
+                run_algorithm(env, q_table_q )
+
+                print('\n-------------------------------------')
+                print('---------- RUNNING SARSA ------------')
+                print('-------------------------------------\n')
+
+                run_algorithm(env, q_table_sarsa)
+
+                # Gera grafico de comparação dos algorítimos:
+                plot_compare_algorithms(q_rewards_list, sarsa_rewards_list, episodes)
 
             else:
-                raise Exception("Wrong inputs to the program.") 
+                raise Exception(" [ERROR] Wrong inputs to the program.") 
                  
 if __name__ == '__main__':
     
