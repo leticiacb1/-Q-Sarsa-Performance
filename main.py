@@ -14,15 +14,19 @@ from Sarsa import *
 
 # ----------------- DOCUMENTAÇÃO  -----------------
 # Como rodar:
-# python TaxiDriverGym.py algoritimo reuse_data
+# python main.py ambiente algoritimo reuse_data
 
+# Valores possíveis:
+# - ambiente = taxi or cliff
 # - algoritimo = q (qlearning) , sarsa ou both (comparação entre sarsa e qlearning)
 # - reuse_data =  1(Usar csv já existente) , 0(Treinar algorítimo novamente) 
 
 # ------------------------------------------------
 
 
-def run_algorithm(env, q_table):
+def run_algorithm(board, q_table):
+
+    env = gym.make(board, render_mode='human').env
     
     (state, _) = env.reset()
     rewards , epochs , actions = 0 , 0 , 0
@@ -62,14 +66,7 @@ def run_algorithm(env, q_table):
     print("\n   > Rewards: {}".format(rewards))
 
 
-def main(previous_info , algo):
-    
-    # Ambiente:
-    env = gym.make("Taxi-v3", render_mode='ansi').env
-    
-    # Nome csv e do Grafico
-    csv_name = 'data/'+ algo + '-taxi-driver.csv'
-    grafic_actions_name = 'results/'+ algo + 'TaxiDriver_actions_per_episode'
+def main(ambiente, previous_info , algoritimo):
     
     # Variávies do modelo:
     alpha = 0.1
@@ -78,22 +75,41 @@ def main(previous_info , algo):
     epsilon_min = 0.05
     epsilon_dec = 0.99
     episodes = 5000
+
+    # Ambiente:
+    if(ambiente == 'taxi'):
+        board = "Taxi-v3"
+        env = gym.make(board, render_mode='ansi').env
+
+        # Nome csv e do Grafico
+        csv_name = 'data/'+ algoritimo + '-taxi-driver.csv'
+        grafic_actions_name = 'results/'+ algoritimo + 'TaxiDriver_actions_per_episode'
+
+    elif(ambiente == 'cliff'):
+        board = "CliffWalking-v0"
+        env = gym.make(board, render_mode='ansi').env
+        
+        # Nome csv e do Grafico
+        csv_name = 'data/'+ algoritimo + '-cliff-walking.csv'
+        grafic_actions_name = 'results/'+ algoritimo + 'CliffWalking_actions_per_episode'
+    else:
+        raise Exception("[ERROR] Wrong env select.") 
     
     if(previous_info == "1"):
-         # Descomentar para utilizar q_table já treinada
+         # Utilizar csv existente
 
-        if (algo in ['q' , 'sarsa']):
+        if (algoritimo in ['q' , 'sarsa']):
             q_table = loadtxt(csv_name, delimiter=',')
             
             # Roda algoritimo para verificar aprendizagem:
             run_algorithm(env, q_table)
         else:
-             raise Exception("[ERROR] Wrong inputs to the program.") 
+            raise Exception("[ERROR] Wrong inputs to the program.") 
 
     else:
         # Executa algorítimo de aprendizagem escolhido.  
         
-        if(algo == 'q'):
+        if(algoritimo == 'q'):
             qlearning = QLearning(env, alpha=alpha, gamma=gamma, epsilon=epsilon, epsilon_min=epsilon_min, epsilon_dec=epsilon_dec, episodes=episodes)
             q_table , rewards_list =  qlearning.train(csv_name, grafic_actions_name)
             
@@ -101,9 +117,10 @@ def main(previous_info , algo):
             print('\n-------------------------------------')
             print('------- RUNNING Q-LEARNING ----------')
             print('-------------------------------------\n')
-            run_algorithm(env, q_table)
+
+            run_algorithm(board, q_table)
   
-        elif(algo == 'sarsa'):
+        elif(algoritimo == 'sarsa'):
 
             sarsa = Sarsa(env, alpha=alpha, gamma=gamma, epsilon=epsilon, epsilon_min=epsilon_min, epsilon_dec=epsilon_dec, episodes=episodes)
             q_table , rewards_list = sarsa.train(csv_name, grafic_actions_name)
@@ -112,11 +129,11 @@ def main(previous_info , algo):
             print('\n-------------------------------------')
             print('---------- RUNNING SARSA ------------')
             print('-------------------------------------\n')
-            run_algorithm(env, q_table)
+            run_algorithm(board, q_table)
 
         else:
 
-            if(algo == 'both'):
+            if(algoritimo == 'both'):
                 
                 # Algorítimos:
                 q =   QLearning(env, alpha=alpha, gamma=gamma, epsilon=epsilon, epsilon_min=epsilon_min, epsilon_dec=epsilon_dec, episodes=episodes)
@@ -131,23 +148,24 @@ def main(previous_info , algo):
                 print('------- RUNNING Q-LEARNING ----------')
                 print('-------------------------------------\n')
 
-                run_algorithm(env, q_table_q )
+                run_algorithm(board, q_table_q)
 
                 print('\n-------------------------------------')
                 print('---------- RUNNING SARSA ------------')
                 print('-------------------------------------\n')
 
-                run_algorithm(env, q_table_sarsa)
+                run_algorithm(board, q_table_sarsa)
 
                 # Gera grafico de comparação dos algorítimos:
-                plot_compare_algorithms(q_rewards_list, sarsa_rewards_list, episodes)
+                plot_compare_algorithms(q_rewards_list, sarsa_rewards_list, episodes, ambiente)
 
             else:
                 raise Exception(" [ERROR] Wrong inputs to the program.") 
                  
 if __name__ == '__main__':
     
-    algoritimo =   sys.argv[1]
-    reuse_data =   sys.argv[2]
+    ambiente = sys.argv[1]
+    algoritimo =   sys.argv[2]
+    reuse_data =   sys.argv[3]
     
-    main(reuse_data, algoritimo)
+    main(ambiente, reuse_data, algoritimo)

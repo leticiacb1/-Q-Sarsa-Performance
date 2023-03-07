@@ -62,7 +62,7 @@ class Sarsa(Algoritimo):
             #reward_per_episode.append(total_rewards)    
             actions_per_episode.append(actions)
             if i % 100 == 0:
-                sys.stdout.write("Episodes: " + str(i) +'\r')
+                sys.stdout.write("  > Episodes: " + str(i) +'\r')
                 sys.stdout.flush()
                 pass
             if self.epsilon > self.epsilon_min:
