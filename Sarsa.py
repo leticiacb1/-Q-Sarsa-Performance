@@ -59,8 +59,8 @@ class Sarsa(Algoritimo):
             if self.epsilon > self.epsilon_min:
                 self.epsilon = self.epsilon * self.epsilon_dec
             
-            savetxt('data/sarsa-taxi-driver.csv', self.q_table, delimiter=',')
-            if (filename is not None): self.plotactions(filename, actions_per_episode, range(0,self.episodes) , 'Actions vs Episodes', 'Episodes', 'Actions')
+        savetxt('data/sarsa-taxi-driver.csv', self.q_table, delimiter=',')
+        if (filename is not None): self.plotactions(filename, actions_per_episode, range(0,self.episodes) , 'Actions vs Episodes', 'Episodes', 'Actions')
 
 
 
