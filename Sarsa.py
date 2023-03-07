@@ -4,33 +4,14 @@ from numpy import savetxt
 import sys
 import matplotlib.pyplot as plt
 
-#
-# This class implements the Q-Learning algorithm.
-# We can use this implementation to solve Toy text environments from Gym project. 
-#
+from Algoritimo import Algoritimo
 
-class Sarsa:
+class Sarsa(Algoritimo):
 
     def __init__(self, env, alpha, gamma, epsilon, epsilon_min, epsilon_dec, episodes):
-        self.env = env
-        self.q_table = np.zeros([env.observation_space.n, env.action_space.n])
-        self.alpha = alpha                  # Taxa de aprendizado , quão maior, maior valor se da ao aprendizado.
-        self.gamma = gamma                  # O quão relevante são as ecompensas futuras em relação a atual 
-        self.epsilon = epsilon              # Chance de escolha de ação aleatória 
-        self.epsilon_min = epsilon_min
-        self.epsilon_dec = epsilon_dec
-        self.episodes = episodes
-
-    def select_action(self, state):
-        rv = random.uniform(0, 1)
-        if rv < self.epsilon:
-            return self.env.action_space.sample()           # Explore action space
-        return np.argmax(self.q_table[state])               # Exploit learned values
+        super().__init__(env, alpha, gamma, epsilon, epsilon_min, epsilon_dec, episodes)
     
-    def select_random_action(self):
-        return self.env.action_space.sample() # Explore action space
-
-    def train(self):
+    def train(self, filename):
         actions_per_episode = []
         reward_per_episode = []
         reward_list = []
@@ -77,5 +58,10 @@ class Sarsa:
                 pass
             if self.epsilon > self.epsilon_min:
                 self.epsilon = self.epsilon * self.epsilon_dec
+            
+            savetxt('data/sarsa-taxi-driver.csv', self.q_table, delimiter=',')
+            if (filename is not None): self.plotactions(filename, actions_per_episode, range(0,self.episodes) , 'Actions vs Episodes', 'Episodes', 'Actions')
+
+
 
         return self.q_table , reward_per_episode 
