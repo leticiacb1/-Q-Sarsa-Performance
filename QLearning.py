@@ -9,7 +9,7 @@ class QLearning(Algoritimo):
     def __init__(self, env, alpha, gamma, epsilon, epsilon_min, epsilon_dec, episodes):
           super().__init__(env, alpha, gamma, epsilon, epsilon_min, epsilon_dec, episodes)
 
-    def train(self, filename):
+    def train(self, csv_name, grafic_name):
         actions_per_episode = []
         reward_per_episode = []
         reward_list = []
@@ -59,8 +59,8 @@ class QLearning(Algoritimo):
                 self.epsilon = self.epsilon * self.epsilon_dec
 
 
-        savetxt('data/q-learning-taxi-driver.csv', self.q_table, delimiter=',')
-        if (filename is not None): self.plotactions(filename, actions_per_episode, range(0,self.episodes) , 'Actions vs Episodes', 'Episodes', 'Actions')
+        savetxt(csv_name, self.q_table, delimiter=',')
+        self.plotactions(grafic_name, actions_per_episode, range(0,self.episodes) , 'Actions vs Episodes', 'Episodes', 'Actions')
 
         return self.q_table , reward_per_episode
    

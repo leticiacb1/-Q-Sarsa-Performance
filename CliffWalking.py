@@ -9,34 +9,32 @@ from time import sleep
 import sys
 
 from utils import *
+from QLearning import *
 from Sarsa import Sarsa
 
-def main(previous_info):
-    env = gym.make("CliffWalking-v0", render_mode='ansi').env
+# ----------------- DOCUMENTAÇÃO  -----------------
+# Como rodar:
+# python CliifWalking.py algoritimo reuse_data
+
+# - algoritimo = q (qlearning) , sarsa ou both (comparação entre sarsa e qlearning)
+# - reuse_data =  1(Usar csv já existente) , 0(Treinar algorítimo novamente) 
+
+# ------------------------------------------------
+
+def run_algorithm(env, q_table , both=False):
     
-    if(previous_info):
-        # Descomentar para utilizar q_table já treinada
-        q_table = loadtxt('data/sarsa-cliff-walking.csv', delimiter=',')
-    else:
-         # Executa algorítimo de aprendizagem.   
-        qlearn = Sarsa(env, alpha=0.1, gamma=0.99, epsilon=0.7, epsilon_min=0.05, epsilon_dec=0.99, episodes=5000)
-        q_table , rewards_list = qlearn.train('results/qsarsa_Actions_per_Episodes')
-
-
     (state, _) = env.reset()
     rewards , epochs , actions = 0 , 0 , 0
     done = False
-    
-    frames = []  # Para animação
-
-    while not done and (epochs < 100):
-        print(state)
+    frames = [] # for animation
+        
+    while (not done) and (epochs < 100):
         action = np.argmax(q_table[state])
         state, reward, done, truncated, info = env.step(action)
 
         rewards = rewards + reward
         actions = actions + 1
-        
+       
         # Put each rendered frame into dict for animation
         frames.append({
             'frame': env.render(),
@@ -45,20 +43,78 @@ def main(previous_info):
             'reward': reward
             }
         )
-        epochs+=1
+        epochs += 1
 
-    clear_output(wait=True)    
+    clear_output(wait=True)
     print_frames(frames)
-
 
     print("\n")
     print("Actions taken: {}".format(actions))
     print("Rewards: {}".format(rewards))
 
+def main(previous_info, algo):
+    
+    #Ambiente
+    env = gym.make("CliffWalking-v0", render_mode='ansi').env
+    
+    # Nome csv e do Grafico
+    csv_name = 'data/'+ algo + '-cliff-walking.csv'
+    grafic_actions_name = 'results/'+ algo + 'CliffWalking_actions_per_episode'
+
+    # Variávies do modelo:
+    alpha = 0.1
+    gamma = 0.99
+    epsilon = 0.7
+    epsilon_min = 0.05
+    epsilon_dec = 0.99
+    episodes = 5000
+
+    if(previous_info == "1"):
+         # Descomentar para utilizar q_table já treinada
+
+        if (algo in ['q' , 'sarsa']):
+            q_table = loadtxt(csv_name, delimiter=',')
+            
+            # Roda algoritimo para verificar aprendizagem:
+            run_algorithm(env, q_table)
+        else:
+             raise Exception("Wrong inputs to the program.") 
+
+    else:
+        # Executa algorítimo de aprendizagem escolhido.  
+        
+        if(algo == 'q'):
+            qlearning = QLearning(env, alpha=alpha, gamma=gamma, epsilon=epsilon, epsilon_min=epsilon_min, epsilon_dec=epsilon_dec, episodes=episodes)
+            q_table , rewards_list =  qlearning.train(csv_name, grafic_actions_name)
+            
+            # Roda algoritimo para verificar aprendizagem:
+            run_algorithm(env, q_table)
+  
+        elif(algo == 'sarsa'):
+
+            sarsa = Sarsa(env, alpha=alpha, gamma=gamma, epsilon=epsilon, epsilon_min=epsilon_min, epsilon_dec=epsilon_dec, episodes=episodes)
+            q_table , rewards_list = sarsa.train(csv_name, grafic_actions_name)
+            
+            # Roda algoritimo para verificar aprendizagem:
+            run_algorithm(env, q_table)
+
+        else:
+
+            if(algo == 'both'):
+                
+                sarsa =  Sarsa(env, alpha=alpha, gamma=gamma, epsilon=epsilon, epsilon_min=epsilon_min, epsilon_dec=epsilon_dec, episodes=episodes) 
+                q =   QLearning(env, alpha=alpha, gamma=gamma, epsilon=epsilon, epsilon_min=epsilon_min, epsilon_dec=epsilon_dec, episodes=episodes)
+                
+                algorithms_list.append(q) 
+                algorithms_list.append(sarsa)
+
+            else:
+                raise Exception("Wrong inputs to the program.") 
+
 
 if __name__ == '__main__':
     
-    #algoritimo = sys.argv[1]
-    #ambiente = sys.argv[2]
+    algoritimo =   sys.argv[1]
+    reuse_data =   sys.argv[2]
 
-    main(False)
+    main(reuse_data, algoritimo)
