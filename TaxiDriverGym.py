@@ -6,18 +6,22 @@ from numpy import loadtxt
 import matplotlib.pyplot as plt
 from IPython.display import clear_output
 from time import sleep
-
+import sys
 from utils import *
 from QLearning import *
 
-def main(previous_info, ambiente):
+
+# ----------------- DOCUMENTAÇÃO  -----------------
+# Como rodar:
+# python TaxiDriverGym.py reuse
+
+# reuse = False -> Treina algorítimo
+# reuse = True -> Reutiliza informações do algoritimo treinado
+
+def main(previous_info):
     
-    if(ambiente == 'taxi'):
-        env = gym.make("Taxi-v3", render_mode='ansi').env
-    elif(ambiente == 'cliff'):
-        env = gym.make("CliffWalking-v0").env
-
-
+    env = gym.make("Taxi-v3", render_mode='ansi').env
+   
     if(previous_info):
         # Descomentar para utilizar q_table já treinada
         q_table = loadtxt('data/q-learning-taxi-driver.csv', delimiter=',')
@@ -57,5 +61,8 @@ def main(previous_info, ambiente):
     print("Penalties incurred: {}".format(penalties))
 
 if __name__ == '__main__':
-    main(False, 'taxi')
+    
+    #algoritimo = sys.argv[1]
+    #ambiente = sys.argv[2]
 
+    main(False)
