@@ -72,4 +72,10 @@ Novamente, o comportamento do gráfico de comparação que leva em conta número
 
 - `QLearning`
 
+Desenvolvimento da fórmula:
+$$Q(S_t, A_t) = Q(S_t, A_t) + \alpha[R_{t+1} + \gamma max(Q(S_{t+1}, a)) - Q(S_t, A_t) ]$$
+
 - `Sarsa`
+Desenvolvimento da fórmula:
+$$Q(S_t, A_t) = Q(S_t, A_t) + \alpha[R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t) ]$$
+
