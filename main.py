@@ -111,7 +111,7 @@ def main(ambiente, previous_info , algoritimo):
         
         if(algoritimo == 'q'):
             qlearning = QLearning(env, alpha=alpha, gamma=gamma, epsilon=epsilon, epsilon_min=epsilon_min, epsilon_dec=epsilon_dec, episodes=episodes)
-            q_table , rewards_list =  qlearning.train(csv_name, grafic_actions_name)
+            q_table , rewards_list =  qlearning.train(csv_name, grafic_actions_name, 'QLearning')
             
             # Roda algoritimo para verificar aprendizagem:
             print('\n-------------------------------------')
@@ -123,7 +123,7 @@ def main(ambiente, previous_info , algoritimo):
         elif(algoritimo == 'sarsa'):
 
             sarsa = Sarsa(env, alpha=alpha, gamma=gamma, epsilon=epsilon, epsilon_min=epsilon_min, epsilon_dec=epsilon_dec, episodes=episodes)
-            q_table , rewards_list = sarsa.train(csv_name, grafic_actions_name)
+            q_table , rewards_list = sarsa.train(csv_name, grafic_actions_name , 'Sarsa')
             
             # Roda algoritimo para verificar aprendizagem:
             print('\n-------------------------------------')

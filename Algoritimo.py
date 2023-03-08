@@ -28,7 +28,7 @@ class Algoritimo():
         plt.xlabel(x_label)
         plt.ylabel(y_label)
         plt.title(titulo)
-        plt.xlim(0,1500)
+        plt.xlim(0,800)
         plt.grid(True)
         plt.savefig(filename+".jpg")     
         plt.close()
