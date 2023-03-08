@@ -4,6 +4,7 @@
   </h3>
 </div>
 
+
 O objetivo do projeto é a comparação entre o desempenho de dois algorítimos muito utilizados em Reinforcement Learning, o [QLearning](https://www.simplilearn.com/tutorials/machine-learning-tutorial/what-is-q-learning) e o [Sarsa](https://towardsdatascience.com/reinforcement-learning-with-sarsa-a-good-alternative-to-q-learning-algorithm-bf35b209e1c). Para demonstrar os diferentes desempenhos, utilizou-se dois ambientes implementados pela biblioteca `gym`, o [TaxiDriver](https://www.gymlibrary.dev/environments/toy_text/taxi/) e o [Cliff Walking](https://www.gymlibrary.dev/environments/toy_text/cliff_walking/)
 
 ### Configurações ⚙️
@@ -43,24 +44,29 @@ Utilizar ou não um csv existente como valor da **q_table**.
 ### TaxiDriver - Desempenho 🚕️
 
 <div align='center'>
-  <img src='results/taxi_comparing_algorithms.jpg' width='450'/>
+  <img src='img/taxi.gif' height='200'/>
 </div>
 
-Analisando apenas o gráfico acima, que representa o número médio de rewards por episódio de treino, parece que ambos os algorítimos (qlearning e sarsa) possiem uma taxa de aprendizagem e comportamento semelhante. Porém, analizando a quantidade de ações realizadas para chegarmos a solução do problema, é possível chegar a conclusão que o **algorítimo Sarsa** nem sempre consegue o caminho ótimo ate o seu destino, tendo que tomar , muitas vezes, um número de ações maior do que o **algorítimo QLearning**.
+Analisando  o gráfico de comparação abaixo, que representa o número médio de rewards por episódio de treino, parece que ambos os algorítimos (qlearning e sarsa) possiem uma taxa de aprendizagem e comportamento semelhante. Porém, analizando a quantidade de ações realizadas para chegarmos a solução do problema, é possível chegar a conclusão que o **algorítimo Sarsa** nem sempre consegue o caminho ótimo ate o seu destino, tendo que tomar , muitas vezes, um número de ações maior do que o **algorítimo QLearning**.
 
 <div align='center'>
-  <img src='results/qTaxiDriver_actions_per_episode.jpg' width='350'/>
-  <img src='results/sarsaTaxiDriver_actions_per_episode.jpg' width='350'/>
+  <img src='results/taxi_comparing_algorithms.jpg' width='300'/>
+  <img src='results/qTaxiDriver_actions_per_episode.jpg' width='300'/>
+  <img src='results/sarsaTaxiDriver_actions_per_episode.jpg' width='300'/>
 </div>
 
 
 ### Cliff Walking - Desempenho 🧙‍♂️️
 
 <div align='center'>
-  <img src='results/cliff_comparing_algorithms.jpg' width='450'/>
+  <img src='img/cliff_walking.gif' height='150'/>
 </div>
 
-Novamente, o comportamento do gráfico número médio de rewards por episódio de treino, parece bem semelhante para ambos os algorítimos (QLearning e Sarsa). Porém, observa-se também para esse ambiente que o algorítimo Sarsa não realiza o número mínimo de steps para realizar o seu objetivo, ou seja, não toma o camínho ótimo como solução, diferentemente do QLearning.
+Novamente, o comportamento do gráfico de comparação que leva em conta número médio de rewards por episódio de treino, parece bem semelhante para ambos os algorítimos (QLearning e Sarsa). Porém, observa-se também para esse ambiente que o algorítimo Sarsa não realiza o número mínimo de steps para realizar o seu objetivo, ou seja, não toma o camínho ótimo como solução, diferentemente do QLearning.
+
+<div align='center'>
+  <img src='results/cliff_comparing_algorithms.jpg' width='300'/>
+</div>
 
 ### QLearning vs  Sarsa - Vantagens e Desvantagens 📌️ 
 
