@@ -42,6 +42,23 @@ Utilizar ou não um csv existente como valor da **q_table**.
 
 ### TaxiDriver - Desempenho 🚕️
 
+<div align='center'>
+  <img src='results/taxi_comparing_algorithms.jpg' width='450'/>
+</div>
+
+Analisando apenas o gráfico acima, que representa o número médio de rewards por episódio de treino, parece que ambos os algorítimos (qlearning e sarsa) possiem uma taxa de aprendizagem e comportamento semelhante. Porém, analizando a quantidade de ações realizadas para chegarmos a solução do problema, é possível chegar a conclusão que o **algorítimo Sarsa** nem sempre consegue o caminho ótimo ate o seu destino, tendo que tomar , muitas vezes, um número de ações maior do que o **algorítimo QLearning**.
+
+<div align='center'>
+  <img src='results/qTaxiDriver_actions_per_episode.jpg' width='450'/>
+  <img src='results/sarsaTaxiDriver_actions_per_episode.jpg' width='450'/>
+</div>
+
+
+
 ### Cliff Walking - Desempenho 🧙‍♂️️
+
+<div align='center'>
+  <img src='results/cliff_comparing_algorithms.jpg' width='450'/>
+</div>
 
 ### Cliff Walking vs  TaxiDriver - Vantagens e Desvantagens 📌️ 
