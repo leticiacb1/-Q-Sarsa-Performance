@@ -72,7 +72,6 @@ Novamente, o comportamento do gráfico de comparação que leva em conta número
 
 - `QLearning`
 
-Desenvolvimento da fórmula:
 $$Q(S_t, A_t) = Q(S_t, A_t) + \alpha[R_{t+1} + \gamma max(Q(S_{t+1}, a)) - Q(S_t, A_t) ]$$
 
 Algorítimo que busca encontrar a melhor ação a ser tomada, dado um estado atual. 
@@ -83,8 +82,7 @@ Como o QLearning aprende com a "política ótima", ele é considerado um algorí
 
 - `Sarsa`
 
-Desenvolvimento da fórmula:
 $$Q(S_t, A_t) = Q(S_t, A_t) + \alpha[R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t) ]$$
 
-Como é possível observar pela formula, o algorítimo SARSA aprende com uma política "quase ótima". Um agente treinado com o algorítimo SARSA interage com o ambiente atualizando **q_table** com base nas ações efetivamente tomadas.
+Como é possível observar pela formula, o algorítimo SARSA aprende com uma política "quase ótima". Um agente treinado com o algorítimo SARSA interage com o ambiente atualizando **q_table** com base nas ações efetivamente tomadas. Quando o problema envolve achar a solução ótima ou quando o número mínimo de ações deve ser tomada na resolução do problema, o algorítimo SARSA pode não se apresentar como a melhor escolha.
 
