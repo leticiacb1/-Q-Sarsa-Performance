@@ -6,7 +6,7 @@
 
 O objetivo do projeto é a comparação entre o desempenho de dois algorítimos muito utilizados em Reinforcement Learning, o [QLearning](https://www.simplilearn.com/tutorials/machine-learning-tutorial/what-is-q-learning) e o [Sarsa](https://towardsdatascience.com/reinforcement-learning-with-sarsa-a-good-alternative-to-q-learning-algorithm-bf35b209e1c). Para demonstrar os diferentes desempenhos, utilizou-se dois ambientes implementados pela biblioteca `gym`, o [TaxiDriver](https://www.gymlibrary.dev/environments/toy_text/taxi/) e o [Cliff Walking](https://www.gymlibrary.dev/environments/toy_text/cliff_walking/)
 
-#### Configurações ⚙️
+### Configurações ⚙️
 
 Instale as bibliotecas necessárias utilizando o comando:
 
@@ -39,3 +39,9 @@ Caso a opção 'both' seja escolhida, ambos os algorítimos rodaram e um gráfic
 - **reuse_data** : '0' ou '1'. 
 
 Utilizar ou não um csv existente como valor da **q_table**. 
+
+### TaxiDriver - Desempenho 🚕️
+
+### Cliff Walking - Desempenho 🧙‍♂️️
+
+### Cliff Walking vs  TaxiDriver - Vantagens e Desvantagens 📌️ 
