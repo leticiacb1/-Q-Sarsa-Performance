@@ -75,7 +75,14 @@ Novamente, o comportamento do gráfico de comparação que leva em conta número
 Desenvolvimento da fórmula:
 $$Q(S_t, A_t) = Q(S_t, A_t) + \alpha[R_{t+1} + \gamma max(Q(S_{t+1}, a)) - Q(S_t, A_t) ]$$
 
+Algorítimo que busca encontrar a melhor ação a ser tomada, dado um estado atual. 
+
+É considerao um algoríitmo **off-policy**, pois a melhor ação é escolhida para a atualização da **q_table** mesmo que essa ação não seja aplicada nessa ocasião (fator de aleatoriedade na tomada de uma ação - **Explore**).
+
+
+
 - `Sarsa`
+
 Desenvolvimento da fórmula:
 $$Q(S_t, A_t) = Q(S_t, A_t) + \alpha[R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t) ]$$
 
