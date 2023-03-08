@@ -86,5 +86,5 @@ Como o QLearning aprende com a "política ótima", ele é considerado um algorí
 Desenvolvimento da fórmula:
 $$Q(S_t, A_t) = Q(S_t, A_t) + \alpha[R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t) ]$$
 
-Como é possível observar pela formula, o algorítimo SARSA aprende com uma política "quase ótima". Esse algorítimo é considerado "on-polícy", pois a ação escolhida para a atualização da **q_table** é realmente a ação executada no estado atual.
+Como é possível observar pela formula, o algorítimo SARSA aprende com uma política "quase ótima". Um agente treinado com o algorítimo SARSA interage com o ambiente atualizando **q_table** com base nas ações efetivamente tomadas.
 
